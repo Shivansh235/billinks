@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 const Generate = () => {
-  const [url, seturl] = useState("");
-  const [shorturl, setshorturl] = useState("");
-  const [loading, setloading] = useState(false);
+  const [url, setUrl] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const generate = async () => {
     const myHeaders = new Headers();
@@ -14,7 +13,7 @@ const Generate = () => {
 
     const raw = JSON.stringify({
       url: url,
-      shorturl: shorturl,
+      shorturl: shortUrl,
     });
 
     const requestOptions = {
@@ -27,9 +26,9 @@ const Generate = () => {
     fetch("/api/generate", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        setloading(`${process.env.NEXT_PUBLIC_HOST}/${shorturl}`);
-        seturl("");
-        setshorturl("");
+        setLoading(`${process.env.NEXT_PUBLIC_HOST}/${shortUrl}`);
+        setUrl("");
+        setShortUrl("");
         alert(result.message);
         console.log(result);
       })
@@ -37,46 +36,42 @@ const Generate = () => {
   };
 
   return (
-    <div className="flex flex-col bg-green-300 w-[30vw] h-[45vh] mx-auto my-20 rounded-lg">
-      <h1 className="mt-7 text-2xl font-bold ml-5">
+    <div className="flex flex-col bg-green-300 w-full max-w-[24rem] md:max-w-lg mx-auto my-24 p-6 rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold text-center mb-4">
         Generate your shorten URLs
       </h1>
-      <div className="flex flex-col gap-4 mx-auto">
+      <div className="flex flex-col gap-4">
         <input
           type="text"
           value={url}
-          className="px-4 py-1.5 rounded-lg w-[25vw] mt-3"
+          className="px-4 py-2 rounded-lg w-full text-sm"
           placeholder="Enter your URL"
-          onChange={(e) => {
-            seturl(e.target.value);
-          }}
+          onChange={(e) => setUrl(e.target.value)}
         />
         <input
           type="text"
-          value={shorturl}
-          className="px-4 py-1.5 rounded-lg w-[25vw]"
+          value={shortUrl}
+          className="px-4 py-2 rounded-lg w-full text-sm"
           placeholder="Enter your preferred short URL text"
-          onChange={(e) => {
-            setshorturl(e.target.value);
-          }}
+          onChange={(e) => setShortUrl(e.target.value)}
         />
         <button
           onClick={generate}
-          className="bg-green-500 hover:bg-green-600 cursor-pointer px-3 py-1.5 text-base font-bold rounded-lg text-white mt-3"
+          className="bg-green-500 hover:bg-green-600 cursor-pointer px-4 py-2 text-base font-bold rounded-lg text-white w-full mt-4"
         >
           Generate
         </button>
       </div>
-{/* in loading we check any url exist previously or not! */}
+      {/* Display the generated link if available */}
       {loading && (
-        <>
-          <span className="font-bold text-lg ml-7 mt-3">Your Link</span>{" "}
-          <code>
-            <Link className="ml-7 py-3" target="_blank" href={loading}>
+        <div className="mt-4 text-center">
+          <span className="font-bold text-lg">Your Link:</span>
+          <div className="break-all mt-2 text-blue-600 underline">
+            <Link target="_blank" href={loading}>
               {loading}
             </Link>
-          </code>
-        </>
+          </div>
+        </div>
       )}
     </div>
   );

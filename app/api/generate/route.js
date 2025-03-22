@@ -7,6 +7,8 @@ export async function POST(request) {
     const client = await clientPromise;
     const db = client.db("bitlinks")
     const collection = db.collection("url")
+    console.log("MongoDB URI:", process.env.MONGODB_URI);
+   
 
     // Check if the short url exists
     const doc = await collection.findOne({shorturl: body.shorturl})
