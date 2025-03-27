@@ -35,7 +35,7 @@ export default function Home() {
         <div className="flex justify-center md:justify-end mt-6 md:mt-0">
           <img 
             className="w-full max-w-md md:max-w-lg mix-blend-darken" 
-            src="https://img.freepik.com/free-vector/diverse-crowd-people-different-ages-races_74855-5235.jpg" 
+            src="/log.avif" 
             alt="Vector Image" 
           />
         </div>
